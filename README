@@ -1,0 +1,57 @@
+StatPack for MySQL
+
+ usage: ./statpack.py [list of arguments]
+
+ Non-interactive mode (aggregate txt files containing SHOW STATUS snapshots):
+
+   -f --files           List of statistics files to aggregate (--files=stat1.txt[, stat2.txt..])
+                        Argument must be first within list of arguments, on it's own
+
+ Interactive mode (connect to running MySQL server for SHOW STATUS snapshots):
+
+   -h --host                    Host for MySQL server to connect to in interactive mode
+   -P --port                    Port the MySQL server is running on
+   -S --socket                  UNIX domain socket to use (instead of -h and -P)
+   -u --user                    User to connect to the MySQL server with
+   -p --password                Password for the user
+   -d --defaults-file           Defaults file to read options from (reads [client] group by default)
+   -i --interval                Length of each collection interval
+   -c --interval-count          Count of intervals to collect and aggregate
+   -s --status-file             File to output raw SHOW STATUS data to
+
+ All modes:
+
+   -r --report-file             File to output generated report(s) to
+
+Input files can contain many snapshots of SHOW STATUS within the same file, and you can also pass in any number of files
+in chronological order (or a mixture of the two). StatPack also understands status files with both batch and non-batch outputs. 
+That is to say it currently can parse files of both of the following formats:
+
+    [markleith@medusa:~/Development] $ mysql -u root -e "SHOW STATUS"                        
+    +---------------------------------+----------+
+    | Variable_name                     | Value    |
+    +---------------------------------+----------+
+    | Aborted_clients                   | 16       |
+    | Aborted_connects                  | 0        |
+    | Binlog_cache_disk_use             | 0        |
+    ...
+     
+    [markleith@medusa:~/Development] $ mysql -u root -B -e "SHOW STATUS"
+    Variable_name   Value
+    Aborted_clients 16
+    Aborted_connects        0
+    Binlog_cache_disk_use   0
+    ...
+
+Currently it does not support the \G output. 
+
+Interactive mode allows you to connect to a running MySQL to gather statistics and generate reports. By default Statpack will 
+connect to localhost:3306 with the root user, and no password. It will generate one report with a 60 second interval. The report 
+will be sent to stdout (the terminal). 
+
+However, you can change all of these with the options shown above. You can also dump the entire output of SHOW GLOBAL STATUS
+that is collected to an output file with the --status-file option as well, should you want to use these for further 
+examination later. 
+
+If you want to output the reports to a file then you can use the --report-file option. You should specify the full path to 
+the file, otherwise the working directory is used.

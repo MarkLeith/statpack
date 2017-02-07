@@ -1,0 +1,34 @@
+v1.0 
+  - Initial release
+v1.1
+  - fixed to run with -B (batch, no table) output as well in readFiles()
+v1.2
+  - Added sorting section to report
+  - Added Com_replace_select
+v1.3
+  - Added nice_time()
+  - Uptime reporting in report headers
+  - Added Select_scan
+v1.4 
+  - Added number_format()
+  - General reformatting
+  - Added prepared statement section
+  - Added admin command sections
+v1.5 
+  - Fixed number formatting for all columns
+    - Changed number_format() to int_format()
+    - Added float_format() (thanks Shane)
+v2.0
+  - Added in proper B/K/M/G formatting for memory and bandwidth with byte_format()
+  - Added in 'interactive' reporting, for reading from a running server
+  - Added in ability to output report to a file with an option
+  - Added in ability to output raw status output collected from running server to a file
+  - Added patch for backwards compatibility with Python versions for center/rjust
+    - Patch submitted by David Lowless - thanks Dave!
+  - Re-formatted the report, and added in better seperator for above patch
+  - Added in Thread Cache section
+  - De-tabbed
+  - Changed locale.setlocale to use machine default ('')
+  - Added in percentages for statement activity
+v2.1
+  - Fixed index out of bounds bug in interactive mode with versions < 5 
